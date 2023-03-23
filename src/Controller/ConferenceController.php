@@ -20,9 +20,10 @@ class ConferenceController extends AbstractController
     }
 
     #[Route('/conference/{id}', name: 'conference')]
-    public function show(Conference $conference, CommentRepository $commentRepository) : Response
+    public function show(Conference $conference, CommentRepository $commentRepository, ConferenceRepository $conferenceRepository) : Response
     {
         return $this->render('conference/show.html.twig', [
+            'conferences' => $conferenceRepository->findAll(),
             'conference' => $conference,
             'comments' => $commentRepository->findBy(['conference' => $conference], ['createdAt' => 'DESC']),
         ]);
